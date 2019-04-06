@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+      <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyAnvb9PaAro6Di5OZxmtObb-LxBtxEjQEU",
+            authDomain: "hospital-management-18f97.firebaseapp.com",
+            databaseURL: "https://hospital-management-18f97.firebaseio.com",
+            projectId: "hospital-management-18f97",
+            storageBucket: "hospital-management-18f97.appspot.com",
+            messagingSenderId: "224580189703"
+          };
+          firebase.initializeApp(config);
+            const db=firebase.database();
+        </script>
+      
+      <style>
+          .cont{
+              display: none;
+          }
+          .cont{
+              max-width: 600px;
+              margin: 20px auto;
+              background: #eee;
+          }
+      </style>
+    <script type="text/javascript">
+        var displayName,email,emailVerified,photoURL,uid,phoneNumber,providerData;
+      initApp = function() {
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            displayName = user.displayName;
+            email = user.email;
+            emailVerified = user.emailVerified;
+            photoURL = user.photoURL;
+            uid = user.uid;
+            phoneNumber = user.phoneNumber;
+            providerData = user.providerData;
+            user.getIdToken().then(function(accessToken) {
+                
+                document.getElementById('account-details').textContent="Name: "+displayName;
+                
+            });
+          }
+            else {
+            // User is signed out.
+            document.getElementById('account-details').textContent = 'null';
+          }
+        }, function(error) {
+          console.log(error);
+        });
+      };
+
+      window.addEventListener('load', function() {
+        initApp()
+      });
+        
+        $(document).ready(function(){
+            
+            firebase.database().ref('users/').on('value',function(snapshot){
+                
+                var data=snapshot.child(uid).val();
+                    if(snapshot.child(uid).val()!=null){
+                         if(data.identity=="Doctor")
+                            {
+                                var id=data.email;
+                                window.location = 'doc.html?info='+id;
+                            }
+                    if(data.identity=="Patient")
+                            {
+                                var id=data.email;
+                                window.location = 'pat.html?info='+id;
+                            }
+                    }
+                    else{
+                        $('.cont').css('display','block');
+                    } 
+                });
+            
+                $('form').on('submit',function(e){
+                    e.preventDefault();
+                    var usertype=$('select').val();
+                    var user = firebase.auth().currentUser;
+                    var uid=user.uid;
+                     firebase.database().ref('users/').child(uid).set({
+                        firstName: displayName,
+                         identity: usertype,
+                         lastName: displayName,
+                         email: email
+                      });
+                })
+            
+            $('.butn').on('click',function(e){
+                e.preventDefault();
+                    var usertype=$('select').val();
+                if(usertype=="Doctor"){
+                        console.log(displayName+email);
+                        $.ajax({
+                            method: 'POST',
+                            url: 'http://192.168.43.94:3000/api/Doctor',
+                            data: {
+                              "$class": "org.ehr.hackathon.Doctor",
+                              "doctorId": email,
+                              "firstName": displayName,
+                              "lastName": ""
+                            },
+                            success: function(){
+                                console.log('successfulll');
+                            }
+                        });
+                    }
+            });
+            
+            })
+    </script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+      <style>
+            .navbar{
+                background: #5b0cf0;
+                color: #fff;
+            }
+            .navbar li a,.navbar .navbar-brand{
+                color: #fff;
+            }
+          .cont{
+              padding: 20px;
+          }
+        </style>
+	</head>
+    <body>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">EHR System</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+                    <span class="navbar-toggler-icon" style="color: #fff">Menu</span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="first.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="first.html">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="cont">
+                <h3 class="text-center">User details:</h3>
+                <div id="account-details"> 
+                </div>
+                <p>Are you doctor or patient?</p>
+                <form>
+                     <select name="usertype"> 
+                        <option value="Select">Select</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Patient">Patient</option>
+                     </select>
+                    <br><br>
+                    <button class="btn btn-success">Submit</button>
+                </form>
+                <button class="butn">Ajax</button>
+            </div>
+        </div>
+        
+        
+        
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script type="text/javascript">
+        </script>
+        </body>
+</html> 

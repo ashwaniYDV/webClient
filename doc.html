@@ -1,0 +1,364 @@
+<!doctype html>
+<html>
+	<head>
+        <title>Doc</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        
+        <style>
+            body{
+                background: #eee;
+            }
+            .cont-2,.cont-3,.cont-4{
+                display: none;
+            }
+            .navbar{
+                background: #5b0cf0;
+                color: #fff;
+            }
+            .navbar li a,.navbar .navbar-brand{
+                color: #fff;
+            }
+            .cont-1 h1{
+                font-size: 3em;
+            }
+            .cont-1 .btn{
+                margin: 5px;
+                padding: 1em;
+                font-size: 1.2em;
+            }
+            .cont-1{
+                margin-top: 10%;
+            }
+        </style>
+        <style>
+            .cont-2{
+                display: none;
+                margin: 30px auto;
+            }
+            .cont-2 .result .name{
+                color: #6f0df4;
+            }
+            .cont-2 .result{
+                display: none;
+            }
+            .cont-2 .medicineList{
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                margin-bottom: 25px;
+            }
+            .cont-2 .medicineList li{
+                border: 1px solid black;
+                border-bottom: none;
+                border-right: none;
+                margin: 0;
+                padding: 10px;
+            }
+            .medicineList li:last-child{
+                border-bottom: 1px solid black;
+            }
+            .medicineQuqntityList{
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                margin-bottom: 25px;
+            }
+            .medicineQuqntityList li{
+                border: 1px solid black;
+                border-bottom: none;
+                margin: 0;
+                padding: 10px;
+            }
+            .medicineQuqntityList li:last-child{
+                border-bottom: 1px solid black;
+            }
+            .col1,.col2{
+                margin: 0;
+                padding: 0;
+            }
+            .cont-2 ul li.header{
+                font-weight: bold;
+                padding: 10px 0;
+                text-decoration: underline;
+                padding: 10px;
+            }
+            .cont-2 .data{
+                border-radius: 10px;
+                margin-top: 20px;
+                background: skyblue;
+                color: #fff;
+                padding: 50px;
+                box-shadow: 2px 10px 15px rgba(0,0,0,.7);
+            }
+        </style>
+        <style>
+            .cont-3 .write-content{
+                max-width: 600px;
+                margin: 25px auto;
+                background: #eee;
+                padding: 25px;
+                border-radius: 20px;
+                box-shadow: 2px 10px 15px rgba(0,0,0,.8);
+            }
+            .cont-3 .write-content input{
+                width: 100%;
+                margin: 10px 0;
+                padding: 5px;
+            }
+            .cont-3 .write-content .medicine input{
+                width: 40%;
+                margin: 10px 0;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+            <a class="navbar-brand" href="#">EHR System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+                <span class="navbar-toggler-icon" style="color: #fff">Menu</span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="first.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="first.html">Logout</a></li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+        
+        
+        <div class="container cont-1">
+            <h1 class="text-center">Doctor's Portal</h1>
+            
+            <div class="d-flex justify-content-center align-items-center">
+                <button class="read btn btn-danger">Read patient's record</button>
+                <button class="write btn btn-success">Write patient's record</button>
+            </div>
+        </div>
+        <div class="container cont-2">
+            <div class="input">
+                <h1 class="text-center">Read Patient's record</h1>
+                <form class="d-flex justify-content-center">
+                    <input type="text" placeholder="Enter patient's Id" id="readId" style="padding: 5px"><br>
+                    <button class="btn btn-success" style="margin-left: 10px">Get info</button>
+                </form>
+            </div>
+            <div class="result">
+                <h1 class="text-center" style="font-weight: bold">Patient's record</h1>
+                <div class="data" style="max-width: 800px; margin: 0 auto">
+                    <h2 class="name"></h2>
+                </div>
+            </div>
+        </div>
+        <div class="container cont-3">
+            <div class="write-content">
+                <h1 class="text-center">Write patients record</h1>
+                <form>
+                    <div class="patientId">
+                        <input type="text" placeholder="Enter patient's Id" id="patientId">
+                    </div>
+                    <div class="prescription">
+                        <div class="diagnosis">
+                            <input type="text" placeholder="Diagnosis" id="diagnosis">
+                        </div>
+                        <div class="medicines">
+                            <div class="medicine">
+                                <input type="text" placeholder="Add medicine" id="medi1">
+                                <input type="number" placeholder="Quantity" id="quan1">
+                            </div>
+                            <div class="medicine">
+                                <input type="text" placeholder="Add medicine" id="medi2">
+                                <input type="number" placeholder="Quantity" id="quan2">
+                            </div>
+                            <div class="medicine">
+                                <input type="text" placeholder="Add medicine" id="medi3">
+                                <input type="number" placeholder="Quantity" id="quan3">
+                            </div>
+                            <div class="medicine">
+                                <input type="text" placeholder="Add medicine" id="medi4">
+                                <input type="number" placeholder="Quantity" id="quan4">
+                            </div>
+                            <div class="medicine">
+                                <input type="text" placeholder="Add medicine" id="medi5">
+                                <input type="number" placeholder="Quantity" id="quan5">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+        
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        
+        <script type="text/javascript">
+            $('.read').on('click',function(e){
+                e.preventDefault();
+                $('.cont-1').css('display','none');
+                $('.cont-2').css('display','block');
+            });
+            $('.write').on('click',function(e){
+                e.preventDefault();
+                $('.cont-1').css('display','none');
+                $('.cont-3').css('display','block');
+            });
+        </script>
+        
+        
+        <script type="text/javascript">
+            
+            var query;
+            $(document).ready(function(){
+                
+                //function for retreving query string
+                function getQueryStringValue (key){  
+                  return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+                }  
+
+                // Would write the value of the QueryString-variable called cell to the console  
+                query=getQueryStringValue("info");
+                console.log(query);
+              
+            }); 
+            
+            $('.cont-3 form').on('submit',function(e){
+                e.preventDefault();
+                var patientId=$('#patientId').val();
+                var diagnosis=$('#diagnosis').val();
+                var m1=$('#medi1').val();
+                var q1=$('#quan1').val();
+                var m2=$('#medi2').val();
+                var q2=$('#quan2').val();
+                var m3=$('#medi3').val();
+                var q3=$('#quan3').val();
+                var m4=$('#medi4').val();
+                var q4=$('#quan4').val();
+                var m5=$('#medi5').val();
+                var q5=$('#quan5').val();
+                var medi= [];
+                var quan=[];
+                if(m1!=null&&q1!=null&&m1!=""&&q1!=""){
+                    medi.push(m1);
+                    quan.push(q1);
+                }
+                if(m2!=null&&q2!=null&&m2!=""&&q2!=""){
+                    medi.push(m2);
+                    quan.push(q2);
+                }
+                if(m3!=null&&q3!=null&&m3!=""&&q3!=""){
+                    medi.push(m3);
+                    quan.push(q3);
+                }
+                if(m4!=null&&q4!=null&&m4!=""&&q4!=""){
+                    medi.push(m4);
+                    quan.push(q4);
+                }
+                if(m5!=null&&q5!=null&&m5!=""&&q5!=""){
+                    medi.push(m5);
+                    quan.push(q5);
+                }
+                console.log(query);
+                $.ajax({
+                    method: 'POST',
+                    url: 'http://192.168.43.94:3000/api/CreateMedicalRecord',
+                    data: {
+                      "$class": "org.ehr.hackathon.CreateMedicalRecord",
+                      "patient": "org.ehr.hackathon.Patient#"+patientId,
+                      "doctor": "org.ehr.hackathon.Doctor#"+query,
+                      "diagnosis": diagnosis,
+                      "medicine": medi,
+                      "quantity": quan
+                    }
+                })
+            })
+        </script>
+        
+        
+        
+        
+        <script type="text/javascript">
+            $('.cont-2 form').on('submit',function(e){
+                e.preventDefault();
+                var id=$('#readId').val();
+                $.ajax({
+                        method: 'GET',
+                        url: 'http://192.168.43.94:3000/api/Patient/'+id,
+                        success: function(data){
+                             var name=data.firstName+' '+data.lastName;
+                            $('.cont-2 .data .name').text("Name: "+name);
+                            var med=data.medRec;
+                            var list=$('<div class="list row"></div>');
+                            med.forEach(function(medrec,i){
+                                var diagnosis=$('<div class="col-lg-12"><h4 class="diagnosis">'+(i+1)+'. Diagnosis: '+medrec.diagnosis+'</h4></div>');
+                                list.append(diagnosis);
+                                var recordId=medrec.recordId;
+                                var res=recordId.split("_");
+                                var ulData=$('<ul></ul>');
+                                var ulDataLi1=$('<li>Doctor: '+res[0]+'</li>');
+                                var ulDataLi2=$('<li>Date: '+res[2]+'</li>');
+                                var ulDataLi3=$('<li>Time: '+res[3]+'</li>');
+                                ulData.append(ulDataLi1);
+                                ulData.append(ulDataLi2);
+                                ulData.append(ulDataLi3);
+                                var ulDataDiv=$('<div class="col-lg-12"></div>');
+                                ulDataDiv.append(ulData);
+                                list.append(ulDataDiv);
+                                var medicines=medrec.medicine;
+                                var medicineList=$('<ul class="medicineList"></ul>');
+                                medicineList.append($('<li class="header">Medicine</li>'));
+                                medicines.forEach(function(medicine){
+                                    var medicine=$('<li>'+medicine+'</li>');
+                                    medicineList.append(medicine);
+                                });
+                                var col1=$('<div class="col1 col-sm-10"></div>');
+                                col1.append(medicineList);
+                                list.append(col1);
+                                
+                                var medicineQuantity=medrec.quantity;
+                                var medicineQuantityList=$('<ul class="medicineQuqntityList"></ul>');
+                                medicineQuantityList.append($('<li class="header">Quantity</li>'));
+                                medicineQuantity.forEach(function(medicineQ){
+                                    var medicineQuant=$('<li>'+medicineQ+'</li>');
+                                    medicineQuantityList.append(medicineQuant);
+                                });
+                                var col2=$('<div class="col2 col-sm-2"></div>');
+                                col2.append(medicineQuantityList);
+                                list.append(col2);
+                                
+                                var photoRow=$('<div class="col-lg-12"><ul class=title><li>X-rays, MRI and other data.</li></ul></div>');
+                                list.append(photoRow);
+                                var photos=medrec.files;
+                                photos.forEach(function(photo){
+                                    console.log(photo);
+                                    var ph=$('<div class="col-lg-6" style="width="100px"><img src="'+photo+'" width="100%" height="100%"></div>');
+                                    list.append(ph);
+                                });
+                                list.append($('<div class="col-lg-12" style="padding: 40px 0">'));
+                                
+                            });
+                            
+                            $('.cont-2 .data').append(list);
+                            $('.cont-1').css('display','none');
+                            $('.cont-2').css('display','block');
+                            $('.cont-2 .input').css('display','none');
+                            $('.cont-2 .result').css('display','block');
+                        }
+                    });
+            })
+        </script>
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script type="text/javascript">
+        </script>
+    </body>
+</html> 

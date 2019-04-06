@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hospital Web App</title>
+    <!-- ******************************************-->
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+  <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAnvb9PaAro6Di5OZxmtObb-LxBtxEjQEU",
+        authDomain: "hospital-management-18f97.firebaseapp.com",
+        databaseURL: "https://hospital-management-18f97.firebaseio.com",
+        projectId: "hospital-management-18f97",
+        storageBucket: "hospital-management-18f97.appspot.com",
+        messagingSenderId: "224580189703"
+      };
+      firebase.initializeApp(config);
+        const db=firebase.firestore();
+    </script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+      <style>
+            .navbar{
+                background: #5b0cf0;
+                color: #fff;
+                margin-bottom: 50px; 
+            }
+            .navbar li a,.navbar .navbar-brand{
+                color: #fff;
+            }
+          .firebaseui-container form{
+              
+              box-shadow: 2px 10px 15px rgba(0,0,0,.8);
+          }
+        </style>
+  </head>
+  <body>
+    <!-- The surrounding HTML is left untouched by FirebaseUI.
+         Your app may use that space for branding, controls and other customizations.-->
+      <nav class="navbar navbar-expand-lg">
+            <div class="container">
+            <a class="navbar-brand" href="#">EHR System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="first.html">Home</a></li>
+<!--                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>-->
+                </ul>
+            </div>
+            </div>
+        </nav>
+      <div id="firebaseui-auth-container"></div>
+      
+      
+      
+      
+      
+      
+          <script type="text/javascript">
+          // FirebaseUI config.
+          var uiConfig = {
+            //signInSuccessUrl: '<url-to-redirect-to-on-success>',
+              signInSuccessUrl: 'second.html',
+            signInOptions: [
+              // Leave the lines as is for the providers you want to offer your users.
+              firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ],
+            // tosUrl and privacyPolicyUrl accept either url string or a callback
+            // function.
+            // Terms of service url/callback.
+            tosUrl: '<your-tos-url>',
+            // Privacy policy url/callback.
+            privacyPolicyUrl: function() {
+              window.location.assign('<your-privacy-policy-url>');
+            }
+          };
+
+          // Initialize the FirebaseUI Widget using Firebase.
+          var ui = new firebaseui.auth.AuthUI(firebase.auth());
+          // The start method will wait until the DOM is loaded.
+          ui.start('#firebaseui-auth-container', uiConfig);
+        </script>
+  </body>
+</html>

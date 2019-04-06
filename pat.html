@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+	<head>
+        <title>Pat</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        
+        <style>
+            .cont-2{
+                display: none;
+            }
+            .navbar{
+                background: #5b0cf0;
+                color: #fff;
+            }
+            .navbar li a,.navbar .navbar-brand{
+                color: #fff;
+            }
+            .medicineList{
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                margin-bottom: 25px;
+            }
+            .medicineList li{
+                border: 1px solid black;
+                border-bottom: none;
+                border-right: none;
+                margin: 0;
+                padding: 10px;
+            }
+            .medicineList li:last-child{
+                border-bottom: 1px solid black;
+            }
+            .medicineQuqntityList{
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                margin-bottom: 25px;
+            }
+            .medicineQuqntityList li{
+                border: 1px solid black;
+                border-bottom: none;
+                margin: 0;
+                padding: 10px;
+            }
+            .medicineQuqntityList li:last-child{
+                border-bottom: 1px solid black;
+            }
+            .col1,.col2{
+                margin: 0;
+                padding: 0;
+            }
+            ul li.header{
+                font-weight: bold;
+                padding: 10px 10px;
+                text-decoration: underline;
+            }
+            .data{
+                border-radius: 10px;
+                margin-top: 20px;
+                background: skyblue;
+                color: #fff;
+                padding: 50px;
+                box-shadow: 0 5px 20px rgba(0,0,0,.7);
+            }
+        </style>
+    </head>
+    <body>
+       <nav class="navbar navbar-expand-lg">
+           <div class="container">
+            <a class="navbar-brand" href="#">EHR System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+                <span class="navbar-toggler-icon" style="color: #fff">Menu</span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="first.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="first.html">Logout</a></li>
+                </ul>
+            </div>
+           </div>
+        </nav>
+        
+        <div class="container cont-2">
+            <h1 class="text-center">Patient's record</h1>
+            <div class="data" style="max-width: 800px; margin: 0 auto">
+                <h2 class="name"></h2>
+            </div>
+        </div>
+        
+        
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        
+        <script type="text/javascript">
+            var query;
+            $(document).ready(function(){
+                
+                //function for retreving query string
+                function getQueryStringValue (key){  
+                  return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+                }  
+
+                // Would write the value of the QueryString-variable called cell to the console  
+                query=getQueryStringValue("info");
+              
+            }); 
+            
+            $(document).ready(function(){
+                var id=query;
+                $.ajax({
+                        method: 'GET',
+                        url: 'http://192.168.43.94:3000/api/Patient/'+id,
+                        success: function(data){
+                            var name=data.firstName+' '+data.lastName;
+                            $('.cont-2 .data .name').text("Name: "+name);
+                            var med=data.medRec;
+                            var list=$('<div class="list row"></div>');
+                            med.forEach(function(medrec){
+                                var diagnosis=$('<div class="col-lg-12"><h4 class="diagnosis">'+medrec.diagnosis+'</h4></div>');
+                                list.append(diagnosis);
+                                var medicines=medrec.medicine;
+                                var medicineList=$('<ul class="medicineList"></ul>');
+                                medicineList.append($('<li class="header">Medicine</li>'));
+                                medicines.forEach(function(medicine){
+                                    var medicine=$('<li>'+medicine+'</li>');
+                                    medicineList.append(medicine);
+                                });
+                                var col1=$('<div class="col1 col-sm-10"></div>');
+                                col1.append(medicineList);
+                                list.append(col1);
+                                
+                                var medicineQuantity=medrec.quantity;
+                                var medicineQuantityList=$('<ul class="medicineQuqntityList"></ul>');
+                                medicineQuantityList.append($('<li class="header">Quantity</li>'));
+                                medicineQuantity.forEach(function(medicineQ){
+                                    var medicineQuant=$('<li>'+medicineQ+'</li>');
+                                    medicineQuantityList.append(medicineQuant);
+                                });
+                                var col2=$('<div class="col2 col-sm-2"></div>');
+                                col2.append(medicineQuantityList);
+                                list.append(col2);
+                                
+                                var photoRow=$('<div class="col-lg-12"><ul class=title><li>X-rays, MRI and other data.</li></ul></div>');
+                                list.append(photoRow);
+                                var photos=medrec.files;
+                                photos.forEach(function(photo){
+                                    console.log(photo);
+                                    var ph=$('<div class="col-lg-6" style="width="100px"><img src="'+photo+'" width="100%" height="100%"></div>');
+                                    list.append(ph);
+                                });
+                                list.append($('<div class="col-lg-12" style="padding: 40px 0">'));
+                                
+                            });
+                            
+                            $('.cont-2 .data').append(list);
+                            
+                            $('.cont-2').css('display','block');
+                            
+                        }
+                    });
+            })
+        </script>
+    </body>
+</html> 
